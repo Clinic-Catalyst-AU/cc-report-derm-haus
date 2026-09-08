@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Derm Haus - Clinic Catalyst Growth Plan</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="robots" content="noindex,nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark: #0A2A28;
+  --dark-alt: #0D3D38;
+  --teal: #00B4A0;
+  --teal-bright: #00D4BC;
+  --peach: #E8A87C;
+  --peach-light: #F5C7A0;
+  --white: #FFFFFF;
+  --text-faint: rgba(255,255,255,0.6);
+  --text-mid: rgba(255,255,255,0.85);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Open Sans',sans-serif; background:#000; color:var(--white); overflow:hidden; }
+.deck { height:100vh; overflow-y:auto; scroll-snap-type:y mandatory; }
+.slide { height:100vh; scroll-snap-align:start; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.slide-img { padding:0; }
+.slide-img img { width:100%; height:100%; object-fit:contain; background:#000; }
+.slide-html { padding:3rem 4rem; background:var(--dark); }
+.slide-html.alt { background:var(--dark-alt); }
+.slide-html.teal-bg { background:linear-gradient(135deg, #073B36 0%, #0A2A28 100%); }
+.slide-html { background:linear-gradient(160deg, #0A2A28 0%, #0E3D3A 40%, #0A2A28 100%); }
+.slide-html.alt { background:linear-gradient(160deg, #0D3D38 0%, #0A2A28 50%, #0D3D38 100%); }
+.inner { max-width:1100px; width:100%; position:relative; z-index:2; }
+.dot-overlay { position:absolute; inset:0; opacity:0.05; background-image:radial-gradient(circle,var(--teal) 1px,transparent 1px); background-size:50px 50px; pointer-events:none; }
+.glow { position:absolute; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(0,180,160,0.12) 0%,transparent 70%); pointer-events:none; }
+.glow-tl { top:-200px; left:-200px; }
+.glow-br { bottom:-200px; right:-200px; }
+.label { font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--teal-bright); margin-bottom:0.75rem; }
+.label-peach { color:var(--peach); }
+h2 { font-family:'Montserrat',sans-serif; font-size:clamp(1.4rem,3vw,2.2rem); font-weight:800; text-transform:uppercase; line-height:1.1; margin-bottom:1rem; }
+h3 { font-family:'Montserrat',sans-serif; font-size:1rem; font-weight:700; text-transform:uppercase; margin-bottom:0.6rem; }
+.teal { color:var(--teal-bright); }
+.peach { color:var(--peach); }
+p { font-size:0.9rem; color:var(--text-mid); font-weight:300; line-height:1.8; }
+.split { display:grid; grid-template-columns:2fr 3fr; gap:3rem; align-items:center; }
+.split-even { display:grid; grid-template-columns:1fr 1fr; gap:2.5rem; align-items:center; }
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; }
+.grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; }
+.mt-1 { margin-top:1rem; }
+.mt-2 { margin-top:2rem; }
+.task-num { font-family:'Montserrat',sans-serif; font-size:0.6rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--peach); display:inline-block; border:1px solid rgba(232,168,124,0.3); padding:0.25rem 0.7rem; border-radius:4px; margin-bottom:0.8rem; }
+.quote { border-left:3px solid var(--peach); padding:0.8rem 1.2rem; margin-bottom:1.5rem; background:rgba(232,168,124,0.04); border-radius:0 6px 6px 0; }
+.quote p { font-style:italic; color:var(--peach-light); font-size:1rem; line-height:1.5; }
+.browser-frame { border-radius:8px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); background:#111; }
+.browser-bar { height:28px; background:#1a1a1a; display:flex; align-items:center; padding:0 10px; gap:6px; }
+.browser-dot { width:8px; height:8px; border-radius:50%; background:#333; }
+.browser-dot.r { background:#ff5f56; }
+.browser-dot.y { background:#ffbd2e; }
+.browser-dot.g { background:#27c93f; }
+.browser-frame img { width:100%; display:block; }
+.scroll-arrow { position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); text-align:center; z-index:10; animation:bounce 2s infinite; cursor:pointer; }
+.scroll-arrow span { display:block; font-family:'Montserrat',sans-serif; font-size:0.6rem; font-weight:600; color:rgba(255,255,255,0.4); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:0.4rem; }
+.scroll-arrow .arrow { font-size:1.8rem; color:var(--teal-bright); }
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(8px)} }
+.demo-link { display:inline-flex; align-items:center; gap:0.4rem; color:var(--teal-bright); font-family:'Montserrat',sans-serif; font-size:0.72rem; font-weight:700; text-decoration:none; letter-spacing:0.08em; text-transform:uppercase; margin-top:1rem; transition:color 0.2s; }
+.demo-link:hover { color:#00ffec; }
+.card { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:8px; padding:1.3rem; }
+.card h4 { font-family:'Montserrat',sans-serif; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--teal-bright); margin-bottom:0.4rem; }
+.card p { font-size:0.8rem; color:var(--text-faint); line-height:1.6; }
+.price-card { background:rgba(0,180,160,0.06); border:2px solid var(--teal); border-radius:12px; padding:2rem; text-align:center; }
+.price-tag { font-family:'Montserrat',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:900; color:var(--teal-bright); }
+.price-period { font-size:0.75rem; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.1em; }
+.includes-list { list-style:none; text-align:left; margin-top:1.2rem; }
+.includes-list li { padding:0.35rem 0; font-size:0.78rem; color:var(--text-mid); border-bottom:1px solid rgba(255,255,255,0.04); display:flex; align-items:center; gap:0.4rem; }
+.includes-list li::before { content:"\2713"; color:var(--teal-bright); font-weight:700; }
+.discount-badge { display:inline-block; background:var(--peach); color:var(--dark); font-family:'Montserrat',sans-serif; font-size:0.7rem; font-weight:800; padding:0.35rem 0.9rem; border-radius:4px; text-transform:uppercase; letter-spacing:0.06em; margin-top:1rem; }
+.faq-item { padding:0.8rem 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+.faq-q { font-family:'Montserrat',sans-serif; font-size:0.75rem; font-weight:700; color:var(--peach); margin-bottom:0.3rem; }
+.faq-a { font-size:0.8rem; color:var(--text-faint); }
+.sig-line { border-bottom:1px solid rgba(255,255,255,0.25); padding-bottom:0.5rem; margin-top:2rem; min-width:220px; display:inline-block; }
+.sig-label { font-size:0.65rem; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.1em; margin-top:0.3rem; }
+.slide-counter { position:fixed; bottom:1.2rem; right:1.5rem; font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:600; color:rgba(255,255,255,0.25); letter-spacing:0.08em; z-index:100; }
+.nav-hint { position:fixed; bottom:1.2rem; left:1.5rem; font-family:'Montserrat',sans-serif; font-size:0.55rem; color:rgba(255,255,255,0.15); letter-spacing:0.08em; z-index:100; }
+@media print {
+  .deck { overflow:visible; scroll-snap-type:none; }
+  .slide { min-height:100vh; page-break-after:always; page-break-inside:avoid; }
+  .slide-counter, .nav-hint { display:none; }
+}
+@media (max-width:768px) {
+  .slide { min-height:100vh; padding:2rem 1.2rem; }
+  .slide-img { background:#0A2A28; }
+  .slide-img img { width:100%; height:100%; object-fit:contain; }
+  .slide-html { padding:2rem 1.2rem; }
+  .inner { width:100%; }
+  .split { grid-template-columns:1fr; gap:1.2rem; }
+  .split-even { grid-template-columns:1fr; gap:1.2rem; }
+  .grid-2 { grid-template-columns:1fr; gap:0.8rem; }
+  .grid-4 { grid-template-columns:1fr 1fr; gap:0.6rem; }
+  [style*="grid-template-columns"] { grid-template-columns:1fr !important; gap:1rem !important; }
+  h2 { font-size:1.2rem; margin-bottom:0.7rem; }
+  h3 { font-size:0.85rem; }
+  .label { font-size:0.55rem; }
+  .task-num { font-size:0.5rem; padding:0.2rem 0.5rem; }
+  p { font-size:0.8rem; line-height:1.6; }
+  .quote { padding:0.5rem 0.8rem; margin-bottom:0.8rem; }
+  .quote p { font-size:0.85rem; }
+  .card { padding:0.8rem; }
+  .card h4 { font-size:0.65rem; }
+  .card p { font-size:0.7rem; line-height:1.5; }
+  .browser-frame { border-radius:6px; }
+  .browser-bar { height:22px; padding:0 8px; }
+  .browser-dot { width:6px; height:6px; }
+  .browser-frame img { max-height:250px; object-fit:cover; }
+  .price-card { padding:1.2rem; }
+  .price-tag { font-size:1.8rem; }
+  .includes-list li { font-size:0.7rem; padding:0.25rem 0; }
+  .discount-badge { font-size:0.6rem; padding:0.25rem 0.6rem; }
+  .faq-item { padding:0.5rem 0; }
+  .faq-q { font-size:0.68rem; }
+  .faq-a { font-size:0.72rem; }
+  .sig-line { min-width:120px; }
+  .scroll-arrow { display:none; }
+  .slide-counter { display:none; }
+  .nav-hint { font-size:0.5rem; }
+  .demo-link { font-size:0.65rem; }
+}
+</style>
+</head>
+<body>
+<div id="inapp-banner" style="display:none; position:fixed; top:0; left:0; right:0; z-index:9999; background:var(--teal-bright); color:var(--dark); padding:10px 16px; text-align:center; font-family:'Montserrat',sans-serif; font-size:0.7rem; font-weight:700;">
+  For the best experience, <a href="" id="inapp-link" style="color:var(--dark); text-decoration:underline;">open in Safari</a> or Chrome
+</div>
+<div class="deck" id="deck">
+
+<!-- ========== SLIDE 1: COVER ========== -->
+<section class="slide slide-html" style="background:radial-gradient(ellipse at center, #0E3D3A 0%, #0A2A28 60%, #071E1C 100%);">
+  <div class="dot-overlay"></div>
+  <div class="inner" style="text-align:center;">
+    <img src="assets/cc-wordmark.png" alt="Clinic Catalyst" style="height:40px; margin-bottom:3rem; opacity:0.9;">
+    <h2 style="font-size:clamp(2rem,4vw,3.2rem); letter-spacing:2px; margin-bottom:0.5rem;">You don't have a<br>marketing problem.<br><span class="teal">You have a $5M machine to tighten.</span></h2>
+    <p style="max-width:500px; margin:1.5rem auto 2.5rem; font-size:1rem; color:var(--text-mid);">Prepared for Bek McNeil, Derm Haus</p>
+    <p style="font-size:0.85rem; color:var(--text-faint); margin-bottom:0.3rem;">8 September 2026</p>
+    <p style="font-size:0.7rem; color:rgba(255,255,255,0.35); letter-spacing:2px; text-transform:uppercase;">By <strong style="color:var(--teal-bright); font-weight:600;">Kelly Wotherspoon</strong> & <strong style="color:var(--teal-bright); font-weight:600;">Alicia Hagen</strong></p>
+  </div>
+  <div class="scroll-arrow" onclick="document.getElementById('deck').scrollBy({top:window.innerHeight,behavior:'smooth'})">
+    <span>Click to begin</span>
+    <div class="arrow">&#8595;</div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 2: SOCIAL PROOF ========== -->
+<section class="slide" style="padding:0; background:#000;"><img src="assets/social-proof.png" alt="Clinics we've worked with" style="width:100%; height:100%; object-fit:contain;"></section>
+
+<!-- ========== SLIDE 4: WHAT YOU'VE BUILT ========== -->
+<section class="slide slide-html" data-editable="true">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <div class="split" style="grid-template-columns:1fr 2fr; gap:2.5rem;">
+      <div style="text-align:center;">
+        <p class="label label-peach">Your clinic right now</p>
+        <h2 style="font-size:clamp(1.2rem,2.5vw,1.8rem);">What You've <span class="teal">Built Already</span></h2>
+        <img src="assets/bek-portrait.jpg" alt="Bek McNeil" style="width:100%; max-width:280px; border-radius:10px; margin-top:1.5rem; object-fit:cover; object-position:center top; aspect-ratio:3/4;">
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div class="card" style="display:flex; gap:0.8rem; align-items:flex-start; padding:1rem;"><span style="color:var(--teal-bright); font-size:1.1rem; font-weight:700; flex-shrink:0;">&#10003;</span><p style="font-size:0.82rem; color:var(--text-mid); line-height:1.5; margin:0;">Two clinics, Annerley since 2017 and Bald Hills on the north side, family-run with your sister and cousin, both nurses who treat. About 15 people: dermal therapists, nurses, a doctor as clinical director, a clinic coordinator, an area manager and Ebony three days a week on marketing.</p></div>
+        <div class="card" style="display:flex; gap:0.8rem; align-items:flex-start; padding:1rem;"><span style="color:var(--teal-bright); font-size:1.1rem; font-weight:700; flex-shrink:0;">&#10003;</span><p style="font-size:0.82rem; color:var(--text-mid); line-height:1.5; margin:0;">$400K to $440K a month. Your words: "I think we're actually on track" for $5 million this financial year. Most clinics we sit with are a tenth of this.</p></div>
+        <div class="card" style="display:flex; gap:0.8rem; align-items:flex-start; padding:1rem;"><span style="color:var(--teal-bright); font-size:1.1rem; font-weight:700; flex-shrink:0;">&#10003;</span><p style="font-size:0.82rem; color:var(--text-mid); line-height:1.5; margin:0;">Google and Meta already running, brought in-house six months ago after the agency stopped earning its fee. Google at $18 a conversion and just under 300 a month. Meta at $32 a lead. Organic conversions have "just seen a big increase".</p></div>
+        <div class="card" style="display:flex; gap:0.8rem; align-items:flex-start; padding:1rem;"><span style="color:var(--teal-bright); font-size:1.1rem; font-weight:700; flex-shrink:0;">&#10003;</span><p style="font-size:0.82rem; color:var(--text-mid); line-height:1.5; margin:0;">Every new patient goes to a one-hour consultation with a $100 deposit, and every consultation already leaves with a treatment plan, built from Heidi notes through Claude. Most clinics have neither the consult nor the plan.</p></div>
+        <div class="card" style="display:flex; gap:0.8rem; align-items:flex-start; padding:1rem;"><span style="color:var(--teal-bright); font-size:1.1rem; font-weight:700; flex-shrink:0;">&#10003;</span><p style="font-size:0.82rem; color:var(--text-mid); line-height:1.5; margin:0;">A team that treats collaboratively. "I don't actually think we have a huge gap where we're not doing enough." Patients already move between medical aesthetics and skin without being pushed.</p></div>
+        <div class="card" style="display:flex; gap:0.8rem; align-items:flex-start; padding:1rem;"><span style="color:var(--teal-bright); font-size:1.1rem; font-weight:700; flex-shrink:0;">&#10003;</span><p style="font-size:0.82rem; color:var(--text-mid); line-height:1.5; margin:0;">A strong brand, strong socials, 4.9 stars across nearly 200 Google reviews, a concern-led section already on the site, and a team that already uses Claude. The bones are excellent. What is missing is the system underneath them.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: GOALS (moved here from below) ========== -->
+<section class="slide slide-html alt" data-editable="true">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label label-peach">Tailored for Derm Haus</p>
+    <h2>Your Goals & <span class="teal">Objectives</span></h2>
+    <div style="max-width:800px; margin-top:1rem;">
+      <div class='card' style='padding:1.1rem; margin-bottom:0.7rem;'><h4>1. Make $5M Consistent, Profitable and Systemised</h4><p>$440K a month is already above $5M annualised. The goal now is predictable acquisition, predictable conversion, predictable retention and predictable marketing return, so growing past $5M is a lever you pull, not a push.</p></div>
+      <div class='card' style='padding:1.1rem; margin-bottom:0.7rem;'><h4>2. More of Every Lead, Every Client and Every Marketing Dollar</h4><p>At your size a few conversion points are worth more than another treatment or another $10K into ads. A landing page, a CRM and follow-up between the ad and the Timely link, so nobody who clicks and does not book simply disappears.</p></div>
+      <div class='card' style='padding:1.1rem; margin-bottom:0.7rem;'><h4>3. Treatment-Plan Conversion Becomes a KPI</h4><p>You already send a plan after every consult. The next question is how many of those plans convert. Tracked, followed up automatically, reported weekly.</p></div>
+      <div class='card' style='padding:1.1rem; margin-bottom:0.7rem;'><h4>4. Bek Out of the Weeds and Into the GM Seat</h4><p>One screen every Monday. AI that does for you instead of call and response. Less time in the inbox, more time with the team when you are in clinic, and present for school next year.</p></div>
+      <div class='card' style='padding:1.1rem;'><h4>5. The Team Measured by Location and Practitioner</h4><p>Consultations, consult to plan, plan to purchase, rebooking, retail, utilisation, revenue per treatment hour. Growth should never mean Bek does everything.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 5: TASK 1 - BRANDING & POSITIONING ========== -->
+<section class="slide slide-html alt" data-editable="true">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <p class="label">Quick wins you can implement now</p>
+    <div class="split">
+      <div>
+        <span class="task-num">Task One</span>
+        <h2>Branding & <span class="teal">Positioning</span></h2>
+        <div class="quote"><p>"I don't actually think we have a huge gap where we're not doing enough. Our team are actually really good at working quite collaboratively together."</p></div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Keep what works. Your brand, your socials and your team are already strong, and we are not walking into Derm Haus to fix things that are not broken. What we add is the system behind them.</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Three clients, three conversations. The skin restoration client, 40 to 60 plus, pigmentation, texture and ageing, who wants a proper plan. The preventative client, 30 to 40, already in for tox and starting to care about skin quality. And acne and scarring, a different concern and a different funnel. One ad does not speak to all three.</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Concern first, machine second. She does not know RF needling from IPL from exosomes. She knows "my pigmentation is getting worse" and "my skin looks tired". The ad meets her there, then education, then a consultation, then a plan.</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> AHPRA housekeeping. The practitioner bios on your site say "expert" and "expertise". We swap them for "has a special interest in" across the site and every ad before it becomes the next takedown.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="browser-frame">
+          <div class="browser-bar"><span class="browser-dot r"></span><span class="browser-dot y"></span><span class="browser-dot g"></span></div>
+          <img src="assets/brand-collage.jpg" alt="Derm Haus brand photography">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 6: TASK 2 - WEBSITE & SEO ========== -->
+<section class="slide slide-html" data-editable="true">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Two</span>
+        <h2>Website & <span class="teal">SEO</span></h2>
+        <div class="quote"><p>"...SEO after taking down all those pages and doing a bit of like AEO."</p></div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> The new site is the moment to fix the foundations before launch, not after. H1 and H2 structure, redirects from every old URL, service pages, concern pages, local pages for Annerley and Bald Hills, schema, speed, metadata, and a migration plan so the rankings you lost to the TGA takedown do not drop again.</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> GEO is clear content, not a trick. Who Derm Haus is, where the two clinics are, which concerns you treat, who the practitioners are and what they have a special interest in, what each treatment is designed to address. FAQs, practitioner pages, concern pages, consistent business details everywhere.</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> The hero is prime real estate. A "tell us about your skin" capture feeding your CRM, with the consultation as the front door, and compliant ways to show your work so patients see what they need to see to book.</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Self-bookable skin treatments show their price. Nobody should have to leave the site to find out what a peel costs.</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> The concept is built. Kelly's mockup, using your own photography, is linked below.</li>
+        </ul>
+        <a href="https://clinic-catalyst-au.github.io/derm-haus/website.html" target="_blank" class="demo-link">Open the website concept &#8594;</a>
+      </div>
+      <div>
+        <div class="browser-frame">
+          <div class="browser-bar"><span class="browser-dot r"></span><span class="browser-dot y"></span><span class="browser-dot g"></span></div>
+          <img src="assets/website-real-screenshot.png" alt="dermhaus.com.au current homepage">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 7: TASK 3 - OFFER & PRICING ========== -->
+<section class="slide slide-html alt" data-editable="true">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Three</span>
+        <h2>Offer & <span class="teal">Pricing Strategy</span></h2>
+        <div class="quote"><p>"We direct all new patients to a consult."</p></div>
+        <p style="font-size:0.78rem; color:var(--text-mid); margin-bottom:0.7rem;">Lift the $360 average without touching treatment prices. Three doors:</p>
+        <div style="background:rgba(0,180,160,0.06); border:1px solid rgba(0,180,160,0.25); border-radius:6px; padding:0.6rem 0.85rem; margin-bottom:0.5rem;">
+          <p style="font-size:0.68rem; color:var(--teal-bright); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.15rem;">The Consultation</p>
+          <p style="font-size:0.78rem; color:var(--text-mid); line-height:1.45; margin:0;">Already your front door: one hour, $100 deposit credited on the day, a plan every time. Now every ad, page and quiz points at it, and the skin assessment fills it</p>
+        </div>
+        <div style="background:rgba(0,180,160,0.06); border:1px solid rgba(0,180,160,0.25); border-radius:6px; padding:0.6rem 0.85rem; margin-bottom:0.5rem;">
+          <p style="font-size:0.68rem; color:var(--teal-bright); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.15rem;">The Plan</p>
+          <p style="font-size:0.78rem; color:var(--text-mid); line-height:1.45; margin:0;">Treatment planning, cross-referral between medical aesthetics and skin (systemised, not left to chance), homecare, the next treatment booked before they leave, packages and add-ons. How many plans convert becomes a number you see weekly</p>
+        </div>
+        <div style="background:rgba(232,168,124,0.08); border:1px solid rgba(232,168,124,0.3); border-radius:6px; padding:0.6rem 0.85rem; margin-bottom:0.8rem;">
+          <p style="font-size:0.68rem; color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.15rem;">Easy Skin Bookings</p>
+          <p style="font-size:0.78rem; color:var(--text-mid); line-height:1.45; margin:0;">Signature and Advanced Skin Needling, Hydra-Bright, chemical peels, DMK enzyme: <strong style="color:var(--teal-bright);">priced and self-bookable</strong>, zero friction. Consultation-led and medical treatments stay behind the consult, as they should</p>
+        </div>
+        <a href="https://clinic-catalyst-au.github.io/derm-haus/assessment.html" target="_blank" class="demo-link">Try the Skin Assessment Demo &#8594;</a>
+      </div>
+      <div>
+        <div class="browser-frame">
+          <div class="browser-bar"><span class="browser-dot r"></span><span class="browser-dot y"></span><span class="browser-dot g"></span></div>
+          <img src="assets/assessment-screenshot.png" alt="Skin assessment quiz demo">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 8: TASK 4 - ADVERTISING ========== -->
+<section class="slide slide-html" data-editable="true">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Four</span>
+        <h2>Advertising & <span class="teal">Offer Strategy</span></h2>
+        <div class="quote"><p>"Something weird was happening in the background."</p></div>
+        <div style="display:grid; gap:0.55rem;">
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.72rem; min-width:95px; flex-shrink:0;">Acquisition</span>
+            <span style="font-size:0.78rem; color:var(--text-mid); line-height:1.4;">Problem-led ads to new clients: pigmentation, texture, skin quality, acne scarring, ageing skin. CTA: start with a Derm Haus consultation. Never "book this machine"</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.72rem; min-width:95px; flex-shrink:0;">Service</span>
+            <span style="font-size:0.78rem; color:var(--text-mid); line-height:1.4;">For treatments people understand and can self-select. Direct CTA, price where appropriate, a clear next step</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.72rem; min-width:95px; flex-shrink:0;">Retargeting</span>
+            <span style="font-size:0.78rem; color:var(--text-mid); line-height:1.4;">Site visitors, Instagram engagers, video viewers, leads who did not book. Education, philosophy, team, journeys, FAQs. Then another CTA. Nobody disappears</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.72rem; min-width:95px; flex-shrink:0;">Pathways</span>
+            <span style="font-size:0.78rem; color:var(--text-mid); line-height:1.4;">Pigmentation feeds IPL where appropriate (Full Face $390). Texture and scarring feed RF needling ($500). Skin quality feeds a consultation and a wider plan. Concern first, machine second</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.72rem; min-width:95px; flex-shrink:0;">Google</span>
+            <span style="font-size:0.78rem; color:var(--text-mid); line-height:1.4;">"Is Google working?" becomes "which part?" Keyword, service, location, landing page, consultation, treatment, revenue. More money there, less everywhere else. Conversion fires on the thank-you page or a call, never on a rescheduled appointment</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.72rem; min-width:95px; flex-shrink:0;">The measure</span>
+            <span style="font-size:0.78rem; color:var(--text-mid); line-height:1.4;">Spend, leads, consultations, showed, became clients, what they spent. A $20 lead that never books is expensive. A $100 lead that becomes a $3,000 client is cheap</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.72rem; min-width:95px; flex-shrink:0;">Multiply</span>
+            <span style="font-size:0.78rem; color:var(--text-mid); line-height:1.4;">One piece of education becomes seven: organic reel, Meta ad, email, landing page copy, Google Business post, website FAQ, retargeting ad</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:0.6rem;">
+            <span style="color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; font-size:0.72rem; min-width:95px; flex-shrink:0;">AHPRA</span>
+            <span style="font-size:0.78rem; color:var(--text-mid); line-height:1.4;">Every ad, page and reply through the compliance layer. Concern-led, no outcome promises, no product names. The rules that cost you the pages stop being the reason you cannot market</span>
+          </div>
+        </div>
+        <p style="font-size:0.72rem; color:var(--text-faint); margin-top:0.8rem; font-style:italic;">All geo-targeted: Annerley and the south side, Bald Hills and the north side</p>
+      </div>
+      <div>
+        <div class="browser-frame">
+          <div class="browser-bar"><span class="browser-dot r"></span><span class="browser-dot y"></span><span class="browser-dot g"></span></div>
+          <img src="assets/ad-mockups-combined.png" alt="Concern-led ad mockups for Derm Haus">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 9: TASK 5 - CRM & NURTURE ========== -->
+<section class="slide slide-html alt" data-editable="true">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Five</span>
+        <h2>CRM & <span class="teal">Nurture Systems</span></h2>
+        <div class="quote"><p>"We don't have a good solution at the moment. That's not manual."</p></div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> The biggest leak: the ad goes straight to the Timely link. No landing page, no capture, no SMS, no education, no pipeline, and no visibility on anyone who clicked and did not book. At your size that is the opportunity</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> The journey becomes: Meta or Google, dedicated landing page, lead or consultation CTA, CRM, immediate SMS and email, education, Timely booking, and the automation stops the moment they book</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> A pipeline you can see: new lead, contacted, consultation booked, attended, treatment plan presented, converted or not ready, follow-up. Basic chasing no longer depends on someone remembering</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> The treatment-plan ladder. Day 0 plan sent. Day 1: "It was lovely meeting you yesterday. I've sent through your treatment plan, if you have any questions at all just reply here and we'll help." Day 3 to 4 education. Day 7 coordinator contact. Day 14 plus nurture. They may not be saying no. They may just be busy</li>
+        </ul>
+      </div>
+      <div>
+        <div class="browser-frame">
+          <div class="browser-bar"><span class="browser-dot r"></span><span class="browser-dot y"></span><span class="browser-dot g"></span></div>
+          <img src="assets/review-sms-mockup.png" alt="CRM and review SMS automation">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 10: TASK 6 - SPEED TO LEAD ========== -->
+<section class="slide slide-html" data-editable="true">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num">Task Six</span>
+        <h2>Speed-to-Lead & <span class="teal">After Hours</span></h2>
+        <div class="quote"><p>"We just found it was going around in circles and so embarrassing every time we turn it on and try and get it to respond."</p></div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Follow-up today is one coordinator across every channel, inside business hours. After five and on weekends the enquiry waits, and the 50 plus client researching at 9pm books wherever she gets an answer</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> You tried Podium and it embarrassed you. This is the other kind: an assistant trained on your clinics, your treatments, your prices and the AHPRA rules, answering in your voice, with a compliance layer over every reply</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> It answers, qualifies and books the consultation, day or night, and flags anything clinical to the team with the whole conversation captured</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Your coordinator gets her hours back for the conversations that matter: plans, follow-up calls, patients in the room</li>
+        </ul>
+      </div>
+      <div>
+        <div class="browser-frame">
+          <div class="browser-bar"><span class="browser-dot r"></span><span class="browser-dot y"></span><span class="browser-dot g"></span></div>
+          <img src="assets/speed-to-lead-mockup.png" alt="After-hours automation mockup">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 11: BONUS - SKIN ASSESSMENT QUIZ ========== -->
+<section class="slide slide-html teal-bg" data-editable="true">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num" style="border-color:var(--peach); color:var(--peach);">Bonus</span>
+        <h2>Interactive <span class="peach">Skin Assessment Quiz</span></h2>
+        <div class="quote"><p>"Females kind of that 40 plus, have a bit of an interest in going on a skin health journey and are willing to invest in that journey."</p></div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Six questions in her words: the concern, how long, what she has tried, what she wants back, which clinic is closer, when. Then a note on what a Derm Haus consultation would look at first</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Captures name, email and phone - every completion is a warm lead with concerns already mapped</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Lives on website, Linktree, Instagram bio - works 24/7</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.82rem; color:var(--text-mid); line-height:1.6; margin-bottom:0.4rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Funnels into the consultation booking with the $100 deposit, tagged by concern so the follow-up matches: pigmentation, texture and scarring, skin quality, acne, preventative. Every lead lands in the CRM, not an inbox</li>
+        </ul>
+        <a href="https://clinic-catalyst-au.github.io/derm-haus/assessment.html" target="_blank" class="demo-link">Try the Demo &#8594;</a>
+      </div>
+      <div>
+        <div class="browser-frame">
+          <div class="browser-bar"><span class="browser-dot r"></span><span class="browser-dot y"></span><span class="browser-dot g"></span></div>
+          <img src="assets/skin-assessment-mockup.png" alt="Skin assessment quiz">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: BONUS - PASSWORD-PROTECTED INJECTABLE GALLERY ========== -->
+<section class="slide slide-html teal-bg" data-editable="true">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split">
+      <div>
+        <span class="task-num" style="border-color:var(--peach); color:var(--peach);">Bonus</span>
+        <h2>The B&amp;A <span class="peach">Strategy</span></h2>
+        <div class="quote"><p>"We have a few little bits and pieces that we can put into websites to navigate around some of the regulations so that you can still showcase your incredible work in a way that's compliant."</p></div>
+        <p style="font-size:0.78rem; color:var(--text-mid); margin-bottom:0.7rem;">Two galleries, two compliance rules, and none of the pages you had to take down:</p>
+        <div style="background:rgba(0,180,160,0.06); border:1px solid rgba(0,180,160,0.25); border-radius:6px; padding:0.6rem 0.85rem; margin-bottom:0.5rem;">
+          <p style="font-size:0.68rem; color:var(--teal-bright); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.15rem;">Public Gallery</p>
+          <p style="font-size:0.78rem; color:var(--text-mid); line-height:1.45; margin:0;">Skin results, pigmentation, texture, needling and peels, live on the site with consent captured in the CRM, the same angle and light every time, and the required content note. There are none on the site today</p>
+        </div>
+        <div style="background:rgba(232,168,124,0.08); border:1px solid rgba(232,168,124,0.3); border-radius:6px; padding:0.6rem 0.85rem; margin-bottom:0.7rem;">
+          <p style="font-size:0.68rem; color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.15rem;">Password-Protected</p>
+          <p style="font-size:0.78rem; color:var(--text-mid); line-height:1.45; margin:0;">Medical aesthetics results behind a password, shared after a consultation. No product names anywhere, in line with the TGA changes that cost you the pages</p>
+        </div>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Public skin results do the convincing before she ever books</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> The gated gallery is a consult tool, not an ad. Code shared in the room</li>
+        </ul>
+        <a href="https://clinic-catalyst-au.github.io/derm-haus/injectables.html" target="_blank" class="demo-link">Open the gallery demo (code: derm-haus2026) &#8594;</a>
+      </div>
+      <div>
+        <div class="browser-frame">
+          <div class="browser-bar"><span class="browser-dot r"></span><span class="browser-dot y"></span><span class="browser-dot g"></span></div>
+          <img src="assets/ba-gallery-mockup.png" alt="Password-protected before and after gallery">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 12: PRACTITIONER POSITIONING ========== -->
+<section class="slide slide-html" data-editable="true">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label">Your biggest competitive edge</p>
+    <h2>Practitioner <span class="teal">Positioning</span></h2>
+    <p style="max-width:700px; margin-bottom:1.5rem;">Your edge is the team: about 15 practitioners across two clinics who treat collaboratively, a doctor as clinical director, and a business manager stepping up to run it. That story lives on every page, ad and consult booking, in AHPRA-safe words: "has a special interest in", never "expert".</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.2rem; max-width:980px;">
+      <div class="card" style="text-align:center; padding:1.3rem;">
+        <img src="assets/bek-portrait.jpg" alt="Bek McNeil" style="width:130px; height:130px; border-radius:50%; object-fit:cover; object-position:center top; margin-bottom:0.8rem; border:2px solid var(--teal);">
+        <h4 style="color:var(--peach); font-size:0.8rem; margin-bottom:0.2rem;">Bek McNeil</h4>
+        <p style="font-size:0.65rem; color:var(--teal-bright); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.05em; margin-bottom:0.4rem;">BUSINESS MANAGER &amp; CO-OWNER</p>
+        <p style="font-size:0.75rem; color:var(--text-faint); line-height:1.5;">The owner becoming the general manager. Owns the numbers, the Monday screen and the strategy. Not the inbox, not the follow-up, not the coordinator's backup.</p>
+      </div>
+      <div class="card" style="text-align:center; padding:1.3rem;">
+        <img src="assets/dr-rina-savage.jpg" alt="Dr Rina Savage" style="width:130px; height:130px; border-radius:50%; object-fit:cover; object-position:center top; margin-bottom:0.8rem; border:2px solid var(--teal);">
+        <h4 style="color:var(--peach); font-size:0.8rem; margin-bottom:0.2rem;">Dr Rina Savage</h4>
+        <p style="font-size:0.65rem; color:var(--teal-bright); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.05em; margin-bottom:0.4rem;">CLINICAL DIRECTOR &middot; FACEM MBBS</p>
+        <p style="font-size:0.75rem; color:var(--text-faint); line-height:1.5;">The doctor behind the medical aesthetics pathway. The medical authority the pages, ads and the assistant can lean on, in words AHPRA allows.</p>
+      </div>
+      <div class="card" style="text-align:center; padding:1.3rem;">
+        <img src="assets/team.jpg" alt="The Derm Haus team" style="width:130px; height:130px; border-radius:50%; object-fit:cover; object-position:center 30%; margin-bottom:0.8rem; border:2px solid var(--teal);">
+        <h4 style="color:var(--peach); font-size:0.8rem; margin-bottom:0.2rem;">The Team</h4>
+        <p style="font-size:0.65rem; color:var(--teal-bright); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.05em; margin-bottom:0.4rem;">NURSES &middot; DERMAL THERAPISTS &middot; TWO CLINICS</p>
+        <p style="font-size:0.75rem; color:var(--text-faint); line-height:1.5;">Each nurse and dermal therapist with their own page, their own special interest, their own booking link and their own KPIs. Growth spread across 15 people, not one.</p>
+      </div>
+    </div>
+    <p style="font-size:0.75rem; color:var(--text-faint); margin-top:1.2rem; max-width:700px;"><em>Each practitioner gets their own page, gallery and booking link, so clients can request who they want to see. Photos on this slide are from your current website.</em></p>
+  </div>
+</section>
+
+<!-- ========== THE MONDAY SCREEN ========== -->
+<section class="slide slide-html teal-bg">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <p class="label label-peach">The Monday screen</p>
+    <h2>One screen, every Monday. <span class="peach">Where is the opportunity this week?</span></h2>
+    <p style="max-width:820px; margin-bottom:1rem; font-size:0.85rem;">You have a dashboard you never get time to open, and Timely data that will not join Mailchimp. This one is built from Timely, the ad accounts and the CRM, joined without a human, and the summary is written for you: "Here's what happened last week. Here are the three areas that need attention this week."</p>
+    <div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:0.7rem;">
+      <div class="card" style="padding:0.9rem;">
+        <p style="font-size:0.62rem; color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.4rem;">Sales</p>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Revenue vs target</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> By location</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> By department</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Average client spend</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:0.9rem;">
+        <p style="font-size:0.62rem; color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.4rem;">Capacity</p>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Practitioner utilisation</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Open appointments</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Future bookings</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:0.9rem;">
+        <p style="font-size:0.62rem; color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.4rem;">Marketing</p>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Meta and Google spend</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Leads</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Cost per booked consult</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Cost per client</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Revenue by source</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:0.9rem;">
+        <p style="font-size:0.62rem; color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.4rem;">Conversion</p>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Lead to consultation</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Consult to treatment plan</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Plan to treatment</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:0.9rem;">
+        <p style="font-size:0.62rem; color:var(--peach); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.4rem;">Retention</p>
+        <ul style="list-style:none; padding:0; margin:0;">
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Rebooking</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Package uptake</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Lapsed clients</li>
+          <li style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid); line-height:1.5; margin-bottom:0.3rem;"><span style="color:var(--teal-bright); flex-shrink:0;">&#8226;</span> Retail per client</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top:0.9rem; padding:0.9rem 1.1rem; background:rgba(0,180,160,0.06); border-color:rgba(0,180,160,0.25);">
+      <h4 style="margin-bottom:0.25rem; font-size:0.8rem;">Team KPIs, by location and by practitioner</h4>
+      <p style="font-size:0.74rem;">Consultations &middot; consult to plan &middot; plan to purchase &middot; rebooking &middot; average client spend &middot; retail per client &middot; cross-referrals &middot; utilisation &middot; revenue per treatment hour &middot; new client retention. The weekly conversation becomes "where is the opportunity this week", which is a different conversation from "how did we go last week".</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 13: TRANSITION ========== -->
+<section class="slide slide-html teal-bg">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-tl"></div>
+  <div class="glow glow-br"></div>
+  <div class="inner" style="text-align:center;">
+    <p class="label label-peach">Sound familiar?</p>
+    <h2 style="font-size:clamp(1.6rem,4vw,2.8rem); margin-bottom:1.5rem;">Growth Shouldn't Mean <span class="peach">Bek Does Everything</span></h2>
+    <p style="max-width:650px; margin:0 auto 2rem; font-size:1rem;">Manual follow-up. Chasing treatment plans. Mailchimp campaigns switched off because they were too basic. Timely reports that will not join up. The inbox. Being the coordinator's backup. In your words: "I'm still kind of stuck in the middle there a little bit."</p>
+    <h2 style="font-size:clamp(1.2rem,3vw,2rem);">That's Where <span class="teal">We Step In</span></h2>
+    <p style="max-width:600px; margin:1rem auto 0; font-size:0.85rem;">One system underneath the business you already built. It captures every lead, follows up every plan, joins the data and hands you one screen on Monday. You go to clinic to be with your people, not to run around.</p>
+    <div style="margin:2rem auto 0; display:inline-block; background:rgba(0,180,160,0.08); border:1px solid rgba(0,180,160,0.2); border-radius:8px; padding:1rem 2rem;">
+      <p style="font-size:0.7rem; color:var(--teal-bright); font-family:'Montserrat',sans-serif; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.3rem;">Kelly's proven systems</p>
+      <p style="font-size:1.1rem; color:var(--white); font-weight:600;">15+ hours reclaimed per week, within 7 days of going live</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: HATS WE TAKE OFF YOU (moved here from top) ========== -->
+<section class="slide slide-html alt">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <div class="split-even">
+      <div>
+        <p class="label label-peach">What we actually do</p>
+        <h2>The Hats We<br><span class="teal">Take Off You</span></h2>
+        <p style="margin-bottom:1.2rem;">So growth never means more admin.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem;">
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Lead follow-up - every enquiry, every channel, day and night</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Treatment-plan chasing - the ladder runs itself</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Mailchimp - replaced by nurture that sounds like you</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Timely reporting - joined to ads and CRM, automatically</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> The inbox - triaged, answered, escalated only when needed</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Reviews - asked for at the right moment, every time</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> Content - one piece multiplied seven ways</div>
+          <div style="display:flex; gap:0.5rem; font-size:0.78rem; color:var(--text-mid);"><span style="color:var(--teal-bright); flex-shrink:0;">&#10003;</span> The Monday summary - written for you before you open it</div>
+        </div>
+        <p class="mt-1" style="font-size:0.85rem; color:var(--peach-light); font-weight:600;">The only hat left is the one you are growing into. The general manager.</p>
+      </div>
+      <div>
+        <img src="assets/conference-stage.jpg" alt="Kelly and Alicia presenting" style="width:100%; border-radius:12px; object-fit:cover; object-position:center top; border:2px solid rgba(0,180,160,0.2); max-height:420px;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 14: CAMPAIGN PROCESS ========== -->
+<section class="slide slide-html alt">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label">How it works</p>
+    <h2>Our Campaign <span class="teal">Process</span></h2>
+    <p style="max-width:700px; margin-bottom:2rem;">She responds to a concern-led ad on Facebook, Instagram or Google. She gives her details for the skin assessment or the consultation. From there, everything is automated, and it stops the moment she books.</p>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:1.2rem;">
+      <div class="card" style="text-align:center; padding:1rem;">
+        <img src="assets/campaign-ad.png" alt="Campaign" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:6px; margin-bottom:0.8rem;">
+        <h4>Campaign</h4>
+        <p>A concern-led ad reaches the 40 plus woman across Brisbane's north and south side who has noticed her pigmentation getting worse</p>
+      </div>
+      <div class="card" style="text-align:center; padding:1rem;">
+        <img src="assets/campaign-crm.png" alt="Into CRM" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:6px; margin-bottom:0.8rem;">
+        <h4>Into CRM</h4>
+        <p>She takes the skin assessment or lands on the concern page. Name, phone, email and concern captured and tagged in your CRM, not an inbox</p>
+      </div>
+      <div class="card" style="text-align:center; padding:1rem;">
+        <img src="assets/campaign-followup.png" alt="Follow Up" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:6px; margin-bottom:0.8rem;">
+        <h4>5-Day Follow Up</h4>
+        <p>Automated SMS, email and call sequences if they don't book immediately</p>
+      </div>
+      <div class="card" style="text-align:center; padding:1rem;">
+        <img src="assets/campaign-booked.png" alt="Booked" style="width:100%; aspect-ratio:1; object-fit:cover; border-radius:6px; margin-bottom:0.8rem;">
+        <h4 style="color:var(--peach);">Booked</h4>
+        <p>Consultation booked, $100 deposit taken, and the automation stops the moment she books</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 15: SYSTEMS INSTALLED ========== -->
+<section class="slide slide-html">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split-even" style="margin-bottom:1.5rem;">
+      <div>
+        <p class="label">What you walk away with</p>
+        <h2>Systems <span class="teal">Installed</span></h2>
+        <p>When you're not the one juggling 7 systems that don't talk to each other, life gets easier for everyone. We install systems that just do it - no copy-paste, no manual follow-up.</p>
+      </div>
+      <div>
+        <img src="assets/systems-ecosystem.png" alt="Connected ecosystem" style="width:100%; border-radius:8px;">
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card" style="padding:1rem; display:flex; gap:1rem; align-items:center;">
+        <img src="assets/systems-leads-booked.png" alt="Leads Booked" style="width:120px; height:120px; object-fit:cover; border-radius:6px; flex-shrink:0;">
+        <div><h4>Leads Booked</h4><p>New enquiries captured, answered, followed up and booked into your Timely calendar, without the coordinator touching them</p></div>
+      </div>
+      <div class="card" style="padding:1rem; display:flex; gap:1rem; align-items:center;">
+        <img src="assets/systems-nurtured.png" alt="Clients Nurtured" style="width:120px; height:120px; object-fit:cover; border-radius:6px; flex-shrink:0;">
+        <div><h4>Clients Nurtured</h4><p>Your database wakes up: treatment-plan follow-up, maintenance reminders, lapsed patient reactivation and review requests, segmented by concern and by clinic</p></div>
+      </div>
+      <div class="card" style="padding:1rem; display:flex; gap:1rem; align-items:center;">
+        <img src="assets/systems-emails.png" alt="Emails Handled" style="width:120px; height:120px; object-fit:cover; border-radius:6px; flex-shrink:0;">
+        <div><h4>Emails &amp; DMs Handled</h4><p>You don't need to answer the same questions all day - the system responds instantly, you focus on treating</p></div>
+      </div>
+      <div class="card" style="padding:1rem; display:flex; gap:1rem; align-items:center;">
+        <img src="assets/systems-afterhours.png" alt="After-Hours" style="width:120px; height:120px; object-fit:cover; border-radius:6px; flex-shrink:0;">
+        <div><h4>After-Hours Covered</h4><p>Enquiries handled outside clinic hours so you're not replying at 9pm - zero leads lost overnight</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE 16: YOUR PART ========== -->
+<section class="slide slide-html alt">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label label-peach">Team effort</p>
+    <h2>Your Part in <span class="teal">the Success</span></h2>
+    <p style="max-width:700px; margin-bottom:1.5rem;">We can't control every aspect of your business. The overall success comes down to a team effort. Here's what we need from you.</p>
+    <div class="grid-2">
+      <div class="card" style="padding:1rem; display:flex; gap:1rem; align-items:center;">
+        <img src="assets/yourpart-ba.png" alt="Before & Afters" style="width:120px; height:120px; object-fit:cover; border-radius:6px; flex-shrink:0;">
+        <div><h4>Post Before &amp; After Images</h4><p>Shoot skin results in the same light every time, consent captured in the CRM. It takes 6 to 9 touches before someone books, and the results do the convincing.</p></div>
+      </div>
+      <div class="card" style="padding:1rem; display:flex; gap:1rem; align-items:center;">
+        <img src="assets/yourpart-experience.png" alt="Deliver" style="width:120px; height:120px; object-fit:cover; border-radius:6px; flex-shrink:0;">
+        <div><h4>Deliver the Experience</h4><p>The system gets her to the consult. From there, it is a one-hour consultation and a plan that turns a first visit into a long-term skin journey.</p></div>
+      </div>
+      <div class="card" style="padding:1rem; display:flex; gap:1rem; align-items:center;">
+        <img src="assets/yourpart-clinic.png" alt="Clinic" style="width:120px; height:120px; object-fit:cover; border-radius:6px; flex-shrink:0;">
+        <div><h4>Create an Experience</h4><p>Two clinics that already look the part. One filming day a month gives us the education content we multiply seven ways.</p></div>
+      </div>
+      <div class="card" style="padding:1rem; display:flex; gap:1rem; align-items:center;">
+        <img src="assets/yourpart-rebook.png" alt="Rebook" style="width:120px; height:120px; object-fit:cover; border-radius:6px; flex-shrink:0;">
+        <div><h4>Upsell &amp; Rebook</h4><p>Every consult ends with a plan. Every plan has the next treatment booked before she leaves. Then the cross-referral, systemised. That is where the $360 moves.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FIRST 90 DAYS ========== -->
+<section class="slide slide-html alt">
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label">The first 90 days</p>
+    <h2>The build with us, then Ebony runs it, <span class="teal">then scale what made money</span></h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.2rem; margin-top:1.2rem;">
+      <div class="card" style="padding:1.2rem;">
+        <h4>Month 1 - The build, with you</h4>
+        <p>A proper CRM. Meta lead integration. Google tracking fixed so a rescheduled appointment is never a conversion. Timely integration. Lead pipeline. SMS and email follow-up. Booking detection, automations stop when booked. Treatment-plan ladder. Landing pages and the three Meta layers launched. The Monday screen. Ebony trained as it goes in.</p>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <h4>Month 2 - Ebony runs it</h4>
+        <p>Organic and paid from the one system, in-house. Self-booking treatments priced. The pigmentation funnel, the skin quality funnel, the texture and scarring funnel, retargeting. Consultation follow-up tightened. Conversion measured by team member and by location. Clinic Catalyst behind her.</p>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <h4>Month 3 - Scale</h4>
+        <p>Which campaign produced the best clients. Which location converts. Which practitioner converts consultations. Which treatment has the best acquisition economics. Which Google keywords and which Meta creative produced booked clients. Then scale that. Not everything.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:1.2rem; padding:1rem 1.2rem; background:rgba(0,180,160,0.06); border-color:rgba(0,180,160,0.25);">
+      <h4 style="margin-bottom:0.3rem;">Where the money is</h4>
+      <p style="font-size:0.74rem;">The gaps are between ad and booking, lead and follow-up, consultation and treatment plan, treatment plan and purchase, first treatment and long-term client. Those percentage points do not sound exciting. At $400K to $440K a month they are worth more than another treatment or another $10K into ads.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== YOUR PATH FORWARD: BESPOKE INSTALL, THEN EBONY RUNS IT ========== -->
+<section class="slide slide-html">
+  <div class="glow glow-br"></div>
+  <div class="inner">
+    <div class="split-even">
+      <div>
+        <p class="label">Your path forward</p>
+        <h2>One month to install it.<br><span class="teal">Then Ebony runs it, in-house.</span></h2>
+        <p style="margin-bottom:1.2rem; font-size:0.85rem;">You said you need systems that give you the overview, and AI that does for you rather than call and response. So we do not hand you a report. We build the whole ecosystem with you, organic and ads, on Derm Haus, in your accounts, and we teach Ebony how to run it, so the socials, the campaigns and the follow-up are done in-house, with the system.</p>
+        <div class="faq-item">
+          <p class="faq-q">Week 1 - Scope, tracking, attribution</p>
+          <p class="faq-a">Google conversions fixed so a reschedule is never a conversion. Meta, Google and Timely joined. The pipeline and the KPIs defined by location and practitioner. The data first.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Week 2 - CRM, pipeline, the ladder</p>
+          <p class="faq-a">CRM and pipeline across both clinics, Timely integration, lead SMS and email, the treatment-plan follow-up ladder, the assistant on your channels with the compliance layer. Ebony and the coordinator trained on it as it goes in.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Week 3 - Funnels live</p>
+          <p class="faq-a">Landing pages, the three Meta layers and the Google restructure launched. Self-booking pricing live. The skin assessment in the hero and the bio. Content multiplied seven ways, with Ebony driving it.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Week 4 - The Monday screen, handover</p>
+          <p class="faq-a">Dashboard live with the AI summary. SEO and GEO migration plan for the new site. The 30-skill Claude library installed for Ebony. Recorded handover. From month two Ebony runs organic and paid with the system, the library and the Monday screen, with Clinic Catalyst behind her.</p>
+        </div>
+        <p style="font-size:0.72rem; color:var(--text-faint); margin-top:0.8rem;">If you or Ebony would rather build it in the room, the Brisbane 3-Day Workshop runs 26 to 28 Oct. Either way, you own everything.</p>
+      </div>
+      <div>
+        <div class="price-card">
+          <p class="price-period">Month one - the build</p>
+          <div class="price-tag">$3,500</div>
+          <p style="font-size:0.7rem; color:var(--text-faint); margin-top:0.2rem;">+ GST &middot; one payment &middot; payment plan available</p>
+          <ul class="includes-list">
+            <li>CRM and pipeline structure, both clinics</li>
+            <li>Meta lead funnel and landing pages</li>
+            <li>Google conversion tracking, fixed</li>
+            <li>Timely integration, booking detection</li>
+            <li>Lead SMS and email automations</li>
+            <li>Treatment-plan follow-up ladder</li>
+            <li>Three Meta layers, Google restructure, launched</li>
+            <li>Organic content system, run by Ebony</li>
+            <li>SEO and GEO migration plan for the new site</li>
+            <li>Team KPIs, attribution, the Monday screen</li>
+            <li>30-skill Claude library, Ebony trained to run it</li>
+          </ul>
+          <div class="discount-badge">No lock-in</div>
+          <p style="display:inline-block; margin-top:1rem; background:var(--teal-bright); color:var(--dark); padding:0.8rem 1.6rem; border-radius:6px; font-family:'Montserrat',sans-serif; font-size:0.75rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase;">Reply yes and we lock in your start week</p>
+          <p style="font-size:0.68rem; color:var(--text-faint); margin-top:0.6rem;">Ad spend in your own accounts. Ongoing support available, scoped with you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SLIDE: WHAT WE BUILD TOGETHER ========== -->
+<section class="slide slide-html alt">
+  <div class="dot-overlay"></div>
+  <div class="glow glow-tl"></div>
+  <div class="inner">
+    <p class="label label-peach">Everything you walk out with</p>
+    <h2>What We <span class="teal">Build Together</span></h2>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.2rem; margin-top:1.5rem;">
+      <div class="card" style="padding:1.2rem;">
+        <h4>Meta Ads</h4>
+        <p>Three layers: problem-led acquisition, service-specific, retargeting. Landing pages, pixel, tracking. Nobody who clicks disappears.</p>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <h4>Google Ads</h4>
+        <p>Attribution first: which keyword, service, location and landing page produce booked consultations. Then the budget follows the money.</p>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <h4>CRM &amp; Automations</h4>
+        <p>Pipeline across both clinics, Timely integrated. Lead follow-up, treatment-plan ladder, automation that stops when they book.</p>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <h4>Email &amp; SMS</h4>
+        <p>Nurture that replaces Mailchimp. Maintenance reminders, lapsed patient reactivation, review requests at the right moment.</p>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <h4>Lead Capture</h4>
+        <p>Skin assessment live in the hero, the bio and the ads. Every lead captured with the concern mapped, feeding the right follow-up.</p>
+      </div>
+      <div class="card" style="padding:1.2rem;">
+        <h4>GEO &amp; AI Search</h4>
+        <p>Foundations for the new site before launch: redirects, concern pages, practitioner pages, schema, FAQs. Visible on Google and in AI search.</p>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:2rem;"><p style="display:inline-block; background:var(--teal-bright); color:var(--dark); padding:0.9rem 2rem; border-radius:6px; font-family:'Montserrat',sans-serif; font-size:0.8rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase;">Reply yes and we lock in your start week</p><p style="font-size:0.7rem; color:var(--text-faint); margin-top:0.6rem;">One month to install it. Then Ebony runs it, in-house, with Clinic Catalyst behind her.</p></div>
+  </div>
+</section>
+
+</div>
+
+<div class="slide-counter" id="counter">1 / --</div>
+<div class="nav-hint">Arrow keys to navigate &middot; F for fullscreen</div>
+
+<script>
+const deck = document.getElementById('deck');
+const slides = document.querySelectorAll('.slide');
+const counter = document.getElementById('counter');
+const total = slides.length;
+counter.textContent = '1 / ' + total;
+function updateCounter() {
+  const current = Math.round(deck.scrollTop / window.innerHeight) + 1;
+  counter.textContent = current + ' / ' + total;
+}
+deck.addEventListener('scroll', updateCounter);
+document.addEventListener('keydown', function(e) {
+  const h = window.innerHeight;
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); deck.scrollBy({top:h, behavior:'smooth'}); }
+  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); deck.scrollBy({top:-h, behavior:'smooth'}); }
+  if (e.key === 'Home') { e.preventDefault(); deck.scrollTo({top:0, behavior:'smooth'}); }
+  if (e.key === 'End') { e.preventDefault(); deck.scrollTo({top:deck.scrollHeight, behavior:'smooth'}); }
+  if (e.key === 'f' || e.key === 'F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+var ua = navigator.userAgent || '';
+if (/FBAN|FBAV|Instagram|Line|Messenger/i.test(ua)) {
+  var banner = document.getElementById('inapp-banner');
+  var link = document.getElementById('inapp-link');
+  if (banner) { banner.style.display = 'block'; }
+  if (link) { link.href = window.location.href; }
+}
+const canvas = document.getElementById('sig-canvas');
+const ctx = canvas ? canvas.getContext('2d') : null;
+let drawing = false;
+let hasSigned = false;
+if (ctx) {
+  ctx.strokeStyle = '#00D4BC';
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    const t = e.touches ? e.touches[0] : e;
+    return { x: (t.clientX - r.left) * (canvas.width / r.width), y: (t.clientY - r.top) * (canvas.height / r.height) };
+  }
+  canvas.addEventListener('mousedown', e => { drawing = true; hasSigned = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); });
+  canvas.addEventListener('mousemove', e => { if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+  canvas.addEventListener('mouseup', () => drawing = false);
+  canvas.addEventListener('mouseleave', () => drawing = false);
+  canvas.addEventListener('touchstart', e => { e.preventDefault(); drawing = true; hasSigned = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }, {passive:false});
+  canvas.addEventListener('touchmove', e => { e.preventDefault(); if (!drawing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }, {passive:false});
+  canvas.addEventListener('touchend', () => drawing = false);
+}
+const dateEl = document.getElementById('sig-date');
+if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-AU', {day:'numeric', month:'long', year:'numeric'});
+function clearSig() {
+  if (ctx) { ctx.clearRect(0, 0, canvas.width, canvas.height); hasSigned = false; }
+}
+function acceptProposal() {
+  const name = document.getElementById('sig-name').value.trim();
+  if (!hasSigned) { alert('Please sign above before accepting.'); return; }
+  if (!name) { alert('Please enter your full name.'); return; }
+  document.getElementById('accept-btn').style.display = 'none';
+  document.getElementById('accept-confirm').style.display = 'block';
+}
+</script>
+</body>
+</html>
